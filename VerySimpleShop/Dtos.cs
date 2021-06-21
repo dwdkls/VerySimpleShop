@@ -141,8 +141,9 @@ namespace VerySimpleShop.Dtos
             fixture.Customize<OrderRequest>(composer => composer
                 .With(x => x.Customer, fixture.Create<NewCustomer>())
             );
-
-            fixture.Customize<OrderItem>(composer => composer.With(x => x.Price, 10));
+            fixture.Customize<OrderItem>(composer => composer
+                .With(x => x.Price, 10)
+            );
             var order = fixture.Create<OrderRequest>();
 
             var sum = new DtoProcessor().CalculateOrderSum(order);

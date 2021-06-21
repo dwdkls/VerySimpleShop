@@ -16,6 +16,8 @@ namespace VerySimpleShop.Services
     {
         private readonly ICustomerRepository repository;
 
+        public ICustomerRepository Repository => this.repository;   // for tests only!
+
         public OrderService(ICustomerRepository repository)
         {
             this.repository = repository;
@@ -25,14 +27,14 @@ namespace VerySimpleShop.Services
         {
             if (request.Customer is Dtos.RegisteredCustomer registeredCustomer)
             {
-                var customer = this.repository.GetById(registeredCustomer.Id);
+                var customer = this.Repository.GetById(registeredCustomer.Id);
                 customer.PlaceOrder();
                 return false;
             }
             else if (request.Customer is Dtos.NewCustomer newCustomer)
             {
                 var customer = new Entities.CustomerEntity(newCustomer.FirstName, newCustomer.LastName, newCustomer.DateOfBirth);
-                repository.AddCustomer(customer);
+                Repository.AddCustomer(customer);
                 customer.PlaceOrder();
                 return true;
             }
@@ -58,6 +60,7 @@ namespace VerySimpleShop.Services
             var service = fixture.Create<OrderService>();
 
             service.Should().NotBeNull();
+            service.Repository.Should().NotBeNull();
         }
     }
 
