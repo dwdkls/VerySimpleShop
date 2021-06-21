@@ -48,7 +48,7 @@ namespace VerySimpleShop.Dtos
         {
             var customer = fixture.Create<NewCustomer>();
 
-            customer.FirstName.Should().NotBeNullOrEmpty();
+            customer.FirstName.Should().StartWith("FirstName");
         }
 
         [Fact]
